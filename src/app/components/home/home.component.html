@@ -1,0 +1,23 @@
+<div id="app">
+  <div
+    nz-row
+    [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }"
+    [nzAlign]="'middle'"
+    [nzJustify]="'center'"
+  >
+    @for (pokemon of pokemonDetails; track pokemon.id) {
+    <div nz-col [nzSpan]="6">
+      <nz-card [nzHoverable]="true">
+        <p>{{ pokemon.name }}</p>
+        <img
+          [src]="pokemon.sprites.other['official-artwork'].front_default"
+          [alt]="pokemon.name"
+          class="poke-image"
+        />
+      </nz-card>
+    </div>
+    } @empty {
+    <h1>No data</h1>
+    }
+  </div>
+</div>
