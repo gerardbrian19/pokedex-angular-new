@@ -1,23 +1,42 @@
 <div id="app">
-  <div
-    nz-row
-    [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }"
-    [nzAlign]="'middle'"
-    [nzJustify]="'center'"
-  >
-    @for (pokemon of pokemonDetails; track pokemon.id) {
-    <div nz-col [nzSpan]="6">
-      <nz-card [nzHoverable]="true">
-        <p>{{ pokemon.name }}</p>
+  <div class="container">
+    <div class="header">
+      <div nz-flex [nzJustify]="'center'" [nzAlign]="'flex-start'">
         <img
-          [src]="pokemon.sprites.other['official-artwork'].front_default"
-          [alt]="pokemon.name"
-          class="poke-image"
+          nz-image
+          width="350px"
+          height="auto"
+          nzSrc="/images/pokemon.png"
+          alt="pokemon logo"
+          class="pokemon-logo"
         />
-      </nz-card>
+      </div>
     </div>
-    } @empty {
-    <h1>No data</h1>
-    }
+    <div class="content">
+      <div class="hero"></div>
+      <div class="card-list">
+        <div nz-row [nzGutter]="16">
+          @for (pokemon of pokemonDetails; track pokemon.id) {
+          <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6" [nzXl]="4">
+            <nz-card nzHoverable style="width: 240px" [nzCover]="coverTemplate">
+              <nz-card-meta
+                [nzTitle]="pokemon.name"
+                nzDescription="Pokemon"
+              ></nz-card-meta>
+            </nz-card>
+            <ng-template #coverTemplate>
+              <img
+                [alt]="pokemon.name"
+                [src]="pokemon.sprites.other['official-artwork'].front_default"
+              />
+            </ng-template>
+          </div>
+          } @empty {
+          <h1>No data available</h1>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="footer"></div>
   </div>
 </div>

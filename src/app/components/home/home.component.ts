@@ -4,12 +4,22 @@ import { PokemonRepositoryService } from '../../services/pokemon-repository.serv
 import { IPokemonDetails } from '../../interface/IPokemon';
 import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, NzCardModule, NzGridModule],
+  imports: [
+    CommonModule,
+    NzCardModule,
+    NzGridModule,
+    NzLayoutModule,
+    NzImageModule,
+    NzFlexModule,
+  ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   public pokemonDetails: IPokemonDetails[] = [];
