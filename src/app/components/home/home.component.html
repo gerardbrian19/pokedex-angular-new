@@ -4,7 +4,7 @@
       <div nz-flex [nzJustify]="'center'" [nzAlign]="'flex-start'">
         <img
           nz-image
-          width="350px"
+          width="300em"
           height="auto"
           nzSrc="/images/pokemon.png"
           alt="pokemon logo"
@@ -13,16 +13,66 @@
       </div>
     </div>
     <div class="content">
-      <div class="hero"></div>
+      <div class="hero">
+        <div nz-row>
+          <div nz-col nzSpan="12">
+            @if (selectedPokemon){
+            <img
+              nz-image
+              width="200px"
+              height="200px"
+              [nzSrc]="
+                selectedPokemon.sprites.other['official-artwork'].front_default
+              "
+              [alt]="selectedPokemon.name"
+            />
+            } @else {
+            <img nz-image height="200px" nzSrc="/images/unown.png" alt="" />
+            }
+          </div>
+          <div nz-col nzSpan="12">
+            @if (selectedPokemon){
+            <nz-tabset>
+              <nz-tab nzTitle="Info">
+                <div>
+                  <div>ID: {{ selectedPokemon.id }}</div>
+                  <div>Height: {{ selectedPokemon.height }}</div>
+                  <div>Weight: {{ selectedPokemon.weight }}</div>
+                  <div>Abilities:</div>
+                  <div>Type:</div>
+                </div>
+              </nz-tab>
+              <nz-tab nzTitle="Stats">
+                // Fix track
+                @for (stat of selectedPokemon.stats; track stat.base_stat) {
+                <div>
+                  <span>{{ formatStatName(stat.stat.name) }}:</span>
+                  <nz-progress [nzPercent]="stat.base_stat"></nz-progress>
+                </div>
+                }
+              </nz-tab>
+
+              <nz-tab nzTitle="Evolution">Content of Tab Pane 3</nz-tab>
+              <nz-tab nzTitle="Move Pool">Content of Tab Pane 4</nz-tab>
+            </nz-tabset>
+            }
+          </div>
+        </div>
+      </div>
       <div class="card-list">
-        <div nz-row [nzGutter]="16">
+        <div nz-row [nzGutter]="8">
           @for (pokemon of pokemonDetails; track pokemon.id) {
-          <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" [nzLg]="6" [nzXl]="4">
-            <nz-card nzHoverable style="width: 240px" [nzCover]="coverTemplate">
-              <nz-card-meta
-                [nzTitle]="pokemon.name"
-                nzDescription="Pokemon"
-              ></nz-card-meta>
+          <div nz-col [nzXs]="6" [nzSm]="6" [nzMd]="6" [nzLg]="8" [nzXl]="4">
+            <nz-card
+              nzHoverable
+              tabindex="0"
+              (click)="handleClick(pokemon)"
+              (keydown)="handleKeyPress($event, pokemon)"
+              [nzCover]="coverTemplate"
+              [nzTitle]="pokemon.name"
+              [nzExtra]="extraTemplate"
+              [nzActions]="[actionEdit, actionEllipsis]"
+            >
             </nz-card>
             <ng-template #coverTemplate>
               <img
@@ -30,12 +80,22 @@
                 [src]="pokemon.sprites.other['official-artwork'].front_default"
               />
             </ng-template>
+            <ng-template #extraTemplate>
+              <p>{{ pokemon.id }}</p>
+            </ng-template>
+            <ng-template #actionEdit>
+              <nz-icon nzType="edit" />
+            </ng-template>
+            <ng-template #actionEllipsis>
+              <nz-icon nzType="ellipsis" />
+            </ng-template>
           </div>
           } @empty {
-          <h1>No data available</h1>
+          <nz-empty></nz-empty>
           }
         </div>
       </div>
+      <nz-back-top></nz-back-top>
     </div>
     <div class="footer"></div>
   </div>

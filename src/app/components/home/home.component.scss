@@ -1,15 +1,37 @@
 #app {
   height: 100vh;
+  background: powderblue;
 
   .container {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 1300px;
     .header {
+      margin-bottom: 30px;
       .pokemon-logo {
         margin-top: 25px;
       }
     }
     .content {
+      .hero {
+        height: 500px;
+      }
+      .card-list {
+      }
     }
     .footer {
+    }
+  }
+  @media (max-width: 1024px) {
+    .container {
+      width: 90%;
+      max-width: 900px;
+    }
+  }
+  @media (max-width: 768px) {
+    .container {
+      width: 95%;
+      max-width: 100%;
     }
   }
 }
