@@ -1,37 +1,103 @@
 #app {
   height: 100vh;
-  background: powderblue;
 
   .container {
     margin-left: auto !important;
     margin-right: auto !important;
     width: 1300px;
+
     .header {
-      margin-bottom: 30px;
+      margin: 40px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       .pokemon-logo {
-        margin-top: 25px;
+        height: auto;
+        width: 25em;
       }
     }
+
     .content {
       .hero {
-        height: 500px;
+        height: 550px;
+        border-radius: 1em;
+        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+
+        .ant-row {
+          height: 100%;
+          .left-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+
+            img {
+              height: auto;
+              width: 25em;
+            }
+            .unown {
+              height: auto;
+              width: 10em;
+            }
+          }
+          .right-col {
+            padding: 30px;
+            .pokemon-stat {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+      .filter-pokemon {
+        margin: 40px 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        div:nth-child(n + 2) {
+          margin-left: 20px;
+        }
       }
       .card-list {
+        padding: 20px;
+        border-radius: 1em;
+        box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+
+        .pokemon-card {
+          cursor: pointer;
+          border-radius: 1em;
+          padding: 10px;
+          transition: all 0.3s ease !important;
+          height: 200px;
+          width: 100% !important;
+
+          .card-header {
+            font-size: 1rem;
+          }
+          .card-body {
+            .pokemon-img {
+              height: auto;
+              width: 8em;
+            }
+          }
+          .card-footer {
+            .pokemon-name {
+            }
+            .pokemon-type {
+            }
+          }
+        }
+        .pokemon-card:hover {
+          transform: scale(1.02);
+          -webkit-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3) !important;
+          -moz-box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3) !important;
+          box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3) !important;
+          opacity: 1 !important;
+        }
+        nz-empty {
+          width: 100%;
+        }
       }
-    }
-    .footer {
-    }
-  }
-  @media (max-width: 1024px) {
-    .container {
-      width: 90%;
-      max-width: 900px;
-    }
-  }
-  @media (max-width: 768px) {
-    .container {
-      width: 95%;
-      max-width: 100%;
     }
   }
 }

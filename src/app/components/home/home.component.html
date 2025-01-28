@@ -1,102 +1,105 @@
 <div id="app">
   <div class="container">
     <div class="header">
-      <div nz-flex [nzJustify]="'center'" [nzAlign]="'flex-start'">
-        <img
-          nz-image
-          width="300em"
-          height="auto"
-          nzSrc="/images/pokemon.png"
-          alt="pokemon logo"
-          class="pokemon-logo"
-        />
-      </div>
+      <img class="pokemon-logo" src="/images/pokemon.png" alt="Pokemon Logo" />
     </div>
     <div class="content">
-      <div class="hero">
+      <div class="hero" [ngStyle]="{ 'background-color': typeColor }">
         <div nz-row>
-          <div nz-col nzSpan="12">
-            @if (selectedPokemon){
+          <div nz-col nzSpan="10" class="left-col">
+            @if(selectedPokemon){
             <img
-              nz-image
-              width="200px"
-              height="200px"
-              [nzSrc]="
+              [src]="
                 selectedPokemon.sprites.other['official-artwork'].front_default
               "
               [alt]="selectedPokemon.name"
             />
             } @else {
-            <img nz-image height="200px" nzSrc="/images/unown.png" alt="" />
+            <img src="/images/unown.png" alt="Pokemon Selected" class="unown" />
             }
           </div>
-          <div nz-col nzSpan="12">
-            @if (selectedPokemon){
+          <div nz-col nzSpan="14" class="right-col">
             <nz-tabset>
               <nz-tab nzTitle="Info">
-                <div>
-                  <div>ID: {{ selectedPokemon.id }}</div>
-                  <div>Height: {{ selectedPokemon.height }}</div>
-                  <div>Weight: {{ selectedPokemon.weight }}</div>
-                  <div>Abilities:</div>
-                  <div>Type:</div>
+                <div nz-row nzJustify="start" class="pokemon-stat">
+                  <div nz-col nzSpan="4">ID</div>
+                  <div nz-col nzSpan="20">ID</div>
+                  <div nz-col nzSpan="4">Height</div>
+                  <div nz-col nzSpan="20">Height</div>
+                  <div nz-col nzSpan="4">Weight</div>
+                  <div nz-col nzSpan="20">Weight</div>
+                  <div nz-col nzSpan="4">Abilities</div>
+                  <div nz-col nzSpan="20">Abilities</div>
+                  <div nz-col nzSpan="4">Type</div>
+                  <div nz-col nzSpan="20">Type</div>
                 </div>
               </nz-tab>
-              <nz-tab nzTitle="Stats">
-                // Fix track
-                @for (stat of selectedPokemon.stats; track stat.base_stat) {
-                <div>
-                  <span>{{ formatStatName(stat.stat.name) }}:</span>
-                  <nz-progress [nzPercent]="stat.base_stat"></nz-progress>
-                </div>
-                }
-              </nz-tab>
-
-              <nz-tab nzTitle="Evolution">Content of Tab Pane 3</nz-tab>
-              <nz-tab nzTitle="Move Pool">Content of Tab Pane 4</nz-tab>
+              <nz-tab nzTitle="Stats"></nz-tab>
+              <nz-tab nzTitle="Evolution"></nz-tab>
+              <nz-tab nzTitle="Move Pool"></nz-tab>
             </nz-tabset>
-            }
           </div>
+        </div>
+      </div>
+      <div class="filter-pokemon">
+        <div>
+          <nz-input-group nzSize="large" [nzSuffix]="suffixIcon">
+            <input nz-input placeholder="Search Pokemon" />
+          </nz-input-group>
+          <ng-template #suffixIcon>
+            <nz-icon nzType="search" />
+          </ng-template>
+        </div>
+        <div>
+          <a nz-dropdown [nzDropdownMenu]="menu">
+            Hover me
+            <nz-icon nzType="down" />
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item>1st menu item</li>
+              <li nz-menu-item>2nd menu item</li>
+              <li nz-menu-item>3rd menu item</li>
+              <li nz-menu-item nzDanger>4th danger item</li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+        <div>
+          <button nz-button nzType="default">Search</button>
         </div>
       </div>
       <div class="card-list">
         <div nz-row [nzGutter]="8">
-          @for (pokemon of pokemonDetails; track pokemon.id) {
-          <div nz-col [nzXs]="6" [nzSm]="6" [nzMd]="6" [nzLg]="8" [nzXl]="4">
-            <nz-card
-              nzHoverable
-              tabindex="0"
+          @for (pokemon of pokemonDetails; track pokemon.id){
+          <div nz-col>
+            <div
+              class="pokemon-card"
               (click)="handleClick(pokemon)"
               (keydown)="handleKeyPress($event, pokemon)"
-              [nzCover]="coverTemplate"
-              [nzTitle]="pokemon.name"
-              [nzExtra]="extraTemplate"
-              [nzActions]="[actionEdit, actionEllipsis]"
             >
-            </nz-card>
-            <ng-template #coverTemplate>
-              <img
-                [alt]="pokemon.name"
-                [src]="pokemon.sprites.other['official-artwork'].front_default"
-              />
-            </ng-template>
-            <ng-template #extraTemplate>
-              <p>{{ pokemon.id }}</p>
-            </ng-template>
-            <ng-template #actionEdit>
-              <nz-icon nzType="edit" />
-            </ng-template>
-            <ng-template #actionEllipsis>
-              <nz-icon nzType="ellipsis" />
-            </ng-template>
+              <div class="card-header">#{{ pokemon.id }}</div>
+              <div class="card-body">
+                <img
+                  [alt]="pokemon.name"
+                  [src]="
+                    pokemon.sprites.other['official-artwork'].front_default
+                  "
+                  class="pokemon-img"
+                />
+              </div>
+              <div class="card-footer">
+                <div class="pokemon-name">{{ pokemon.name }}</div>
+                @for (type of pokemon.types; track $index) {
+                <div class="pokemon-type">{{ type.type.name }}</div>
+                }
+              </div>
+            </div>
           </div>
           } @empty {
           <nz-empty></nz-empty>
           }
         </div>
       </div>
-      <nz-back-top></nz-back-top>
     </div>
-    <div class="footer"></div>
   </div>
 </div>
